@@ -4,15 +4,15 @@
  *    Variables and functions
  *
  *    Author: Jacob Hobeck
- *    Date: 2.12.18
+ *    Date: 2.20.18
 
  *    Filename: tuba.js
  */
 
 /* global variables tracking status of each form section */
-var acresComplete = true;
-var cropsComplete = true;
-var monthsComplete = true;
+var acresComplete = false;
+var cropsComplete = false;
+var monthsComplete = false;
 var fuelComplete = true;
 
 /* global variables referencing sidebar h2 and p elements */
@@ -51,7 +51,23 @@ function verifyAcres() {
 
 /* verify at least one crops checkbox is checked */
 function verifyCrops() {
-    testFormCompleteness();
+  //The below 16 lines of code were provided and come with a bug. it is supposed to display a message and a recommendation, though because of the bug, nothing is supposed to appear, as indicated by the second project.
+    try {
+      for (var i = 0; i < 7; i++) {
+        if(cropsFieldset.getElementsByTagName("input")[i]. checked){
+          cropsComplete = true;
+          messageElement = ""; //clear previous message or recommendation
+          testFormCompleteness();
+          i = 8;
+      }if (i === 7){
+        throw "Please select at least one crop.";
+      }
+    }
+    }catch(message) {
+      cropsComplete = false;
+      messageElement.innerHTML = ""; //remove any former recommendation heading
+      messageHeadElement.innerHTML = message; //display error message
+    }
 }
 
 /* verify months text box entry is between 1 and 12 */
